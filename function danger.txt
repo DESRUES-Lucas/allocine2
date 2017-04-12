@@ -1,0 +1,26 @@
+$(".btn-danger").click(function() {
+		if ($.confirm({
+				title: 'Suppression du film',
+				content: 'T\'es sûr bro?',
+				columnClass: 'col-md-8 col-md-offset-2',
+				confirmButton: 'Carrément',
+    			cancelButton: 'Nan je déconne!',
+		})){
+		//if (confirm('Voulez vous vraiment supprimer ce film ?')){
+			// cache btn
+			$(this).hide();
+			$(this).next().show();
+			var tr = $(this).parents("tr");
+			var id = tr.attr("data-id");
+			// envoyer a film_ajax_delete.php
+			$.get( "film_ajax_delete.php", { film_id: id } )
+	  			.done(function( data ) {
+	    		 tr.hide('slow');
+	    		//alert(  tr.html() ); // affiche les donnees affiche ds le php
+	  			})
+	  			.fail(function() { // permet de checker si bon fichier
+	    			alert( "error" );
+	  			});
+	  	}
+	}); // end fct  danger
+//------------------------------------	
